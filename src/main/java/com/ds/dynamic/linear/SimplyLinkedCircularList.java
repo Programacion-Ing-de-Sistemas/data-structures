@@ -14,7 +14,7 @@ public class SimplyLinkedCircularList<T> implements ListModel<T> {
 
     @Override
     public void addStart(T item) {
-        SimpleNodeLinked<T> newNode = new SimpleNodeLinked<T>(item);
+        SimpleNodeLinked<T> newNode = new SimpleNodeLinked<>(item);
         if (!this.isEmpty()) {
             newNode.next = this.firstNode;
             this.firstNode = newNode;
@@ -27,7 +27,7 @@ public class SimplyLinkedCircularList<T> implements ListModel<T> {
 
     @Override
     public void addEnd(T item) {
-        SimpleNodeLinked<T> newNode = new SimpleNodeLinked<T>(item);
+        SimpleNodeLinked<T> newNode = new SimpleNodeLinked<>(item);
         if (!this.isEmpty()) {
             SimpleNodeLinked<T> assistant = this.firstNode;
             do {
