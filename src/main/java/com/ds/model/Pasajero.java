@@ -5,7 +5,7 @@ public class Pasajero extends Persona {
     private int numeroAsiento;
     private String destino;
 
-    public Pasajero(String nombre, int edad, int dni, int numeroAsiento, String destino) {
+    public Pasajero(String nombre, int edad, int dni, String destino) {
         super(nombre, edad, dni);
         this.setNumeroAsiento(numeroAsiento);
         this.setDestino(destino);

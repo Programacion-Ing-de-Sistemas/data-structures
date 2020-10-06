@@ -11,11 +11,14 @@ public class Bus implements Constantes {
 
     private String placa;
     private Chofer choferBus;
+    private String destino;
     private ListModel<Pasajero> pasajeros;
     
-    public Bus(String placa, Chofer chofer) {
+    public Bus(String placa, Chofer chofer, String destino) {
         this.setPlaca(placa);
-        this.setChoferBus(choferBus);
+        this.setChoferBus(chofer);
+        this.setAlmacenamiento(LISTA_SIMPLE);
+        this.destino = destino;
     }
 
     public String getPlaca() {
@@ -45,25 +48,37 @@ public class Bus implements Constantes {
     public void setAlmacenamiento(String tipo) {
         switch (tipo) {
             case LISTA_DOBLE:
-                this.pasajeros = new DoubleLinkedList<>();
+                this.verificarLista(new DoubleLinkedList<>());
                 break;
             case LISTA_CIRCULAR_SIMPLE:
-                this.pasajeros = new SimplyLinkedCircularList<>();
+                this.verificarLista(new SimplyLinkedCircularList<>());
                 break;
             case LISTA_CIRCULAR_DOBLE:
-                this.pasajeros = new DoubleLinkedCircularList<>();
+                this.verificarLista(new DoubleLinkedCircularList<>());
                 break;
             default:
-                this.pasajeros = new SimpleLinkedList<>();
+                this.verificarLista(new SimpleLinkedList<>());
+                break;
         }
     }
 
-    private void verificarLista(ListModel<Pasajero> anterior, ListModel<Pasajero> nueva) {
+    private void verificarLista(ListModel<Pasajero> nueva) {
         if (this.pasajeros != null) {
-            //
-        } else {
-            this.pasajeros = nueva;
+            nueva.fill(this.pasajeros);
+            
         }
+        this.pasajeros = nueva;
     }
 
+    public void agregarPasajero(Pasajero nuevo) {
+        this.pasajeros.addEnd(nuevo);
+    }
+
+    public String getDestino() {
+        return this.destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
 }
