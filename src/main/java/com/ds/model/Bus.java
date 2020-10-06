@@ -1,6 +1,7 @@
 package com.ds.model;
 
 import com.ds.core.Constantes;
+import com.ds.core.ListBuilder;
 import com.ds.dynamic.linear.DoubleLinkedCircularList;
 import com.ds.dynamic.linear.DoubleLinkedList;
 import com.ds.dynamic.linear.ListModel;
@@ -9,78 +10,57 @@ import com.ds.dynamic.linear.SimplyLinkedCircularList;
 
 public class Bus implements Constantes {
 
-    private String placa;
-    private Chofer choferBus;
-    private String destino;
-    private ListModel<Pasajero> pasajeros;
+    private String busPlate;
+    private Driver busDriver;
+    private String busDestination;
+    private ListModel<Passenger> passengersList;
     
-    public Bus(String placa, Chofer chofer, String destino) {
-        this.setPlaca(placa);
-        this.setChoferBus(chofer);
-        this.setAlmacenamiento(LISTA_SIMPLE);
-        this.destino = destino;
+    public Bus(String plate, Driver driver, String destination) {
+        this.setPlate(plate);
+        this.setBusDriver(driver);
+        this.setPassengerListModel(LISTA_SIMPLE);
+        this.busDestination = destination;
     }
 
-    public String getPlaca() {
-        return placa;
+    public String getPlate() {
+        return this.busPlate;
     }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
+    public void setPlate(String plate) {
+        this.busPlate = plate;
     }
 
-    public Chofer getChoferBus() {
-        return choferBus;
+    public Driver getBusDriver() {
+        return this.busDriver;
     }
 
-    public void setChoferBus(Chofer choferBus) {
-        choferBus.setBusACargo(this);
-        this.choferBus = choferBus;
+    public void setBusDriver(Driver busDriver) {
+        busDriver.setBusACargo(this);
+        this.busDriver = busDriver;
     }
 
-    public ListModel<Pasajero> getPasajeros() {
-        return pasajeros;
+    public ListModel<Passenger> getPassengersList() {
+        return passengersList;
     }
 
-    public void setPasajeros(ListModel<Pasajero> pasajeros) {
-        this.pasajeros = pasajeros;
+    public void setPassengersList(ListModel<Passenger> passengersList) {
+        this.passengersList = passengersList;
     }
 
-    public void setAlmacenamiento(String tipo) {
-        switch (tipo) {
-            case LISTA_DOBLE:
-                this.verificarLista(new DoubleLinkedList<>());
-                break;
-            case LISTA_CIRCULAR_SIMPLE:
-                this.verificarLista(new SimplyLinkedCircularList<>());
-                break;
-            case LISTA_CIRCULAR_DOBLE:
-                this.verificarLista(new DoubleLinkedCircularList<>());
-                break;
-            default:
-                this.verificarLista(new SimpleLinkedList<>());
-                break;
-        }
+    public void setPassengerListModel(String type) {
+        this.passengersList = new ListBuilder<>(this.passengersList, type).changeModel();
     }
 
-    private void verificarLista(ListModel<Pasajero> nueva) {
-        if (this.pasajeros != null) {
-            nueva.fill(this.pasajeros);
-            
-        }
-        this.pasajeros = nueva;
+    public void addPassenger(Passenger nuevo) {
+        nuevo.setSeatNumber(this.passengersList.size() + 1);
+        this.passengersList.addEnd(nuevo);
     }
 
-    public void agregarPasajero(Pasajero nuevo) {
-        nuevo.setNumeroAsiento(this.pasajeros.size() + 1);
-        this.pasajeros.addEnd(nuevo);
+    public String getDestination() {
+        return this.busDestination;
     }
 
-    public String getDestino() {
-        return this.destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
+    public void setDestination(String destination) {
+        this.busDestination = destination;
     }
 }

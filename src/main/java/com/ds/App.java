@@ -3,121 +3,23 @@
  */
 package com.ds;
 
-import com.ds.model.Empresa;
-import com.ds.model.Pasajero;
+import javax.swing.*;
 
-import static javax.swing.JOptionPane.*;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class App {
+
     public String getGreeting() {
         return "Hello world.";
     }
 
     public static void main(String[] args) {
         try {
-            Empresa empresa = new Empresa("Molina union");
-            boolean exit = false;
-            while (!exit) {
-                try {
-                    String menu = "Elija una opcion:\n" +
-                            "1) Viajes\n" +
-                            "2) Buses\n" +
-                            "3) Choferes\n" +
-                            "4) Salir";
-                    int opcionMenu = Integer.parseInt(showInputDialog(null,menu,empresa.getNombreEmpresa(),INFORMATION_MESSAGE));
-                    if (opcionMenu > 0 && opcionMenu < 5) {
-                        switch (opcionMenu) {
-                            case 1:
-                                try {
-                                    String mensajeViajes = "Viajes\n" +
-                                            "1) Agregar pasajero\n" +
-                                            "2) Retirar pasajero\n" +
-                                            "3) Nuevo destino\n";
-                                    int opcionViaje = Integer.parseInt(showInputDialog(null, mensajeViajes, empresa.getNombreEmpresa(), INFORMATION_MESSAGE));
-                                    if (opcionViaje > 0 && opcionViaje < 4) {
-                                        switch (opcionViaje) {
-                                            case 1:
-                                                String nombrePasajero = showInputDialog(null,"Nombre del pasajero", empresa.getNombreEmpresa(), QUESTION_MESSAGE);
-                                                if (!nombrePasajero.isEmpty()) {
-                                                    try {
-                                                        int edadPasajero = Integer.parseInt(showInputDialog(null, "Edad del pasajero", empresa.getNombreEmpresa(),QUESTION_MESSAGE));
-                                                        if (edadPasajero > 0) {
-                                                            try {
-                                                                int dniPasajero = Integer.parseInt(showInputDialog(null,"Dni del pasajero",empresa.getNombreEmpresa(),QUESTION_MESSAGE));
-                                                                if (String.valueOf(dniPasajero).length() == 8) {
-                                                                    String destinoPasajero = showInputDialog(null,"Seleccione destino",empresa.getNombreEmpresa(),QUESTION_MESSAGE,null,empresa.getDestinos(),"?").toString();
-                                                                    if (destinoPasajero != null) {
-                                                                        boolean agregado = empresa.registrarPasajero(new Pasajero(nombrePasajero,edadPasajero,dniPasajero,destinoPasajero));
-                                                                        if (agregado) {
-                                                                            showMessageDialog(null,"Pasajero agregado correctamente!",empresa.getNombreEmpresa(),INFORMATION_MESSAGE);
-                                                                        } else {
-                                                                            showMessageDialog(null,"No hay buses disponibles al destino elegido.",empresa.getNombreEmpresa(),WARNING_MESSAGE);
-                                                                        }
-                                                                    }
-                                                                } else {
-                                                                    showMessageDialog(null,"EL dni debe contener 8 numeros.", empresa.getNombreEmpresa(), WARNING_MESSAGE);
-                                                                }
-                                                            } catch (NumberFormatException nfe) {
-                                                                showMessageDialog(null, "Los caracteres ingresados no son numeros", empresa.getNombreEmpresa(), ERROR_MESSAGE);
-                                                            }
-                                                        } else {
-                                                            showMessageDialog(null, "Ingresa una edad valida.",empresa.getNombreEmpresa(),WARNING_MESSAGE);
-                                                        }
-                                                    } catch (NumberFormatException nfe) {
-                                                        showMessageDialog(null, "Los caracteres ingrsados no son numeros", empresa.getNombreEmpresa(), ERROR_MESSAGE);
-                                                    }
-                                                } else {
-                                                    showMessageDialog(null, "El nombre del pasajero no puede estar vacio", empresa.getNombreEmpresa(), WARNING_MESSAGE);
-                                                }
-                                                break;
-                                            case 2:
-                                                try {
-                                                    int dni = Integer.parseInt(showInputDialog(null,"Dni del pasajero que se quiere retirar",empresa.getNombreEmpresa(),QUESTION_MESSAGE));
-                                                    if (String.valueOf(dni).length() == 8) {
-                                                        Pasajero remover = empresa.retirarPasajero(dni);
-                                                        showMessageDialog(null,"El pasajero " + remover.getNombre() + " fue retirado.", empresa.getNombreEmpresa(), INFORMATION_MESSAGE);
-                                                    } else {
-                                                        showMessageDialog(null,"EL dni debe contener 8 numeros.", empresa.getNombreEmpresa(), WARNING_MESSAGE);
-                                                    }
-                                                } catch (NumberFormatException nfe) {
-                                                    showMessageDialog(null,"Los caracteres ingresados no son numeros.", empresa.getNombreEmpresa(), WARNING_MESSAGE);
-                                                }
-                                                break;
-                                            case 3:break;
-                                        }
-                                    } else {
-                                        opcionNoDisponible(empresa.getNombreEmpresa());
-                                    }
-                                } catch (NumberFormatException nfe) {
-                                    opcionInvalida(empresa.getNombreEmpresa());
-                                }
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                exit = true;
-                                break;
-                        }
-                    } else {
-                        opcionNoDisponible(empresa.getNombreEmpresa());
-                    }
-                } catch (NumberFormatException ex) {
-                    opcionInvalida(empresa.getNombreEmpresa());
-                }
-            }
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         } catch (Exception ex) {
-            showMessageDialog(null, ex.getMessage(), ex.getClass().getName(), ERROR_MESSAGE);
+            showMessageDialog(null,ex.getMessage(),ex.getClass().getName(),ERROR_MESSAGE);
         }
-    }
-
-    public static void opcionInvalida(String title) {
-        showMessageDialog(null, "Ingrese una opcion valida.", title, ERROR_MESSAGE);
-    }
-
-    public static void opcionNoDisponible(String title) {
-        showMessageDialog(null,"La opcion elegida no esta desponible", title, WARNING_MESSAGE);
     }
 
 }
