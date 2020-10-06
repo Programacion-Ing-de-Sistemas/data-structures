@@ -14,7 +14,7 @@ public class DoubleLinkedCircularList<T> implements ListModel<T> {
 
     @Override
     public void addStart(T item) {
-    	DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(item);
+    	DoublyLinkedNode<T> newNode = new DoublyLinkedNode<>(item);
         if (!this.isEmpty()) {
         	DoublyLinkedNode<T> assistant = this.firstNode;
         	assistant.last.next = newNode;
@@ -32,7 +32,7 @@ public class DoubleLinkedCircularList<T> implements ListModel<T> {
 
     @Override
     public void addEnd(T item) {
-    	DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(item);
+    	DoublyLinkedNode<T> newNode = new DoublyLinkedNode<>(item);
     	if (!this.isEmpty()) {
     		DoublyLinkedNode<T> assistant = this.firstNode;
     		do {
