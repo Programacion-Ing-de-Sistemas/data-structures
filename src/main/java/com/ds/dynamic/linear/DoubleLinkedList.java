@@ -14,7 +14,7 @@ public class DoubleLinkedList<T> implements ListModel<T> {
 
     @Override
     public void addStart(T item) {
-        DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(item);
+        DoublyLinkedNode<T> newNode = new DoublyLinkedNode<>(item);
         if (!this.isEmpty()) {
             DoublyLinkedNode<T> assistant = this.firstNode;
             assistant.last = newNode;
@@ -26,7 +26,7 @@ public class DoubleLinkedList<T> implements ListModel<T> {
 
     @Override
     public void addEnd(T item) {
-        DoublyLinkedNode<T> newNode = new DoublyLinkedNode<T>(item);
+        DoublyLinkedNode<T> newNode = new DoublyLinkedNode<>(item);
         if (!this.isEmpty()) {
             DoublyLinkedNode<T> assistant = this.firstNode;
             while (assistant.next != null) {
