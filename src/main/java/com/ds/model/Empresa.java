@@ -5,15 +5,15 @@ import com.ds.dynamic.linear.*;
 
 public class Empresa implements Constantes {
 
-    private String nombreEmpresa;
+    private final String nombreEmpresa;
     private ListModel<Object> destinos;
     private ListModel<Object> buses;
     
     public Empresa(String nombre) {
         this.nombreEmpresa = nombre;
-        this.destinos = construirLista(LISTA_SIMPLE);
+        setModeloListaDestino(LISTA_SIMPLE);
         this.cargarDestinos();
-        this.buses = construirLista(LISTA_SIMPLE);
+        setModeloListaBus(LISTA_SIMPLE);
         this.iniciarBuses();
     }
 
@@ -45,8 +45,12 @@ public class Empresa implements Constantes {
         return destino;
     }
 
-    public void setAlmacenamiento(String tipo) {
+    public void setModeloListaBus(String tipo) {
+        this.buses = verificarLista(this.buses, construirLista(tipo));
+    }
 
+    public void setModeloListaDestino(String tipo) {
+        this.destinos = verificarLista(this.destinos, construirLista(tipo));
     }
 
     public boolean registrarPasajero(Pasajero nuevo) {
@@ -84,13 +88,14 @@ public class Empresa implements Constantes {
         }
     }
 
-    public static ListModel<?> verificarLista(ListModel<Object> anterior, ListModel<Object> nueva) {
+    public static ListModel<Object> verificarLista(ListModel<Object> anterior, ListModel<Object> nueva) {
         if (anterior != null) {
-            anterior.fill(nueva);
-            return anterior;
-        } else {
-            return nueva;
+            nueva.fill(anterior);
         }
+        return nueva;
     }
 
+    public Pasajero retirarPasajero(int dni) {
+        return null;
+    }
 }

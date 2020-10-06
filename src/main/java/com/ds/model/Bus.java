@@ -34,6 +34,7 @@ public class Bus implements Constantes {
     }
 
     public void setChoferBus(Chofer choferBus) {
+        choferBus.setBusACargo(this);
         this.choferBus = choferBus;
     }
 
@@ -71,6 +72,7 @@ public class Bus implements Constantes {
     }
 
     public void agregarPasajero(Pasajero nuevo) {
+        nuevo.setNumeroAsiento(this.pasajeros.size() + 1);
         this.pasajeros.addEnd(nuevo);
     }
 

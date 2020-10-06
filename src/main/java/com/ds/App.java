@@ -30,9 +30,9 @@ public class App {
                             case 1:
                                 try {
                                     String mensajeViajes = "Viajes\n" +
-                                            "1) Agregar pasajero" +
-                                            "2) Retirar psajero" +
-                                            "3) Nuevo destino";
+                                            "1) Agregar pasajero\n" +
+                                            "2) Retirar pasajero\n" +
+                                            "3) Nuevo destino\n";
                                     int opcionViaje = Integer.parseInt(showInputDialog(null, mensajeViajes, empresa.getNombreEmpresa(), INFORMATION_MESSAGE));
                                     if (opcionViaje > 0 && opcionViaje < 4) {
                                         switch (opcionViaje) {
@@ -70,7 +70,19 @@ public class App {
                                                     showMessageDialog(null, "El nombre del pasajero no puede estar vacio", empresa.getNombreEmpresa(), WARNING_MESSAGE);
                                                 }
                                                 break;
-                                            case 2:break;
+                                            case 2:
+                                                try {
+                                                    int dni = Integer.parseInt(showInputDialog(null,"Dni del pasajero que se quiere retirar",empresa.getNombreEmpresa(),QUESTION_MESSAGE));
+                                                    if (String.valueOf(dni).length() == 8) {
+                                                        Pasajero remover = empresa.retirarPasajero(dni);
+                                                        showMessageDialog(null,"El pasajero " + remover.getNombre() + " fue retirado.", empresa.getNombreEmpresa(), INFORMATION_MESSAGE);
+                                                    } else {
+                                                        showMessageDialog(null,"EL dni debe contener 8 numeros.", empresa.getNombreEmpresa(), WARNING_MESSAGE);
+                                                    }
+                                                } catch (NumberFormatException nfe) {
+                                                    showMessageDialog(null,"Los caracteres ingresados no son numeros.", empresa.getNombreEmpresa(), WARNING_MESSAGE);
+                                                }
+                                                break;
                                             case 3:break;
                                         }
                                     } else {
